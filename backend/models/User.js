@@ -9,16 +9,11 @@ const userSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+userSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
 
-  try {
-    const saltRounds = await parseInt(process.env.BCRYPT_SALT_ROUNDS);
-    this.password = await bcrypt.hash(this.password, saltRounds);
-    next();
-  } catch (err) {
-    next(err);
-  }
+  const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS);
+  this.password = await bcrypt.hash(this.password, saltRounds);
 });
 
 userSchema.methods.comparePassword = async function (candidatePassword) {

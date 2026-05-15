@@ -7,15 +7,15 @@ const register = async (req, res) => {
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "Email already exists" });
+      return res.status(400).json({ error: "Email already exists" });
     }
 
     const user = new User({ email, password });
     await user.save();
 
-    res.status(201).json({ message: "User registered successfully" });
+    res.status(201).json({ error: "User registered successfully" });
   } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    res.status(500).json({ error: "Server error", message: err.message });
   }
 };
 
@@ -25,12 +25,16 @@ const login = async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res.status(401).json({ error: "Invalid email or password" });
     }
+
+    console.log("user found:", user.email);
+    console.log("JWT_SECRET:", process.env.JWT_SECRET);
+    console.log("JWT_EXPIRES_IN:", process.env.JWT_EXPIRES_IN);
 
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res.status(401).json({ error: "Invalid email or password" });
     }
 
     const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
@@ -39,7 +43,7 @@ const login = async (req, res) => {
 
     res.status(200).json({ token });
   } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    res.status(500).json({ error: "Server error", message: err.message });
   }
 };
 

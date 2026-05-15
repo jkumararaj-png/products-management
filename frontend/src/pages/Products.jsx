@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { useNavigation } from "react-router";
+import { useNavigate } from "react-router";
 import api from "../utils/api";
 
 function Products() {
+  const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -43,6 +44,8 @@ function Products() {
   }, []);
 
   const fetchProducts = async (token) => {
+    setLoading(true);
+
     try {
       const response = await api.get("/products");
 
@@ -56,6 +59,8 @@ function Products() {
       } else {
         setError("Failed to load products");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,15 +69,18 @@ function Products() {
     navigate("/");
   };
 
+  if (loading) return <p>Loading...</p>;
+
   return (
     <div>
       <div>
         <h2>Products</h2>
         <button onClick={handleLogout}>Logout</button>
+        <button onClick={() => navigate("/products/new")}>
+          Add New Product
+        </button>
       </div>
-
       {error && <p style={{ color: "red" }}>{error}</p>}
-
       <div>
         {products.map((product) => (
           <div key={product._id}>
@@ -84,6 +92,9 @@ function Products() {
             <p>${product.price}</p>
             <p>{product.category}</p>
             <p>{product.inStock ? "In Stock" : "Out of Stock"}</p>
+            <button onClick={() => navigate(`/products/edit/${product._id}`)}>
+              Edit
+            </button>
           </div>
         ))}
       </div>

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const Product = require("./models/Product");
 
@@ -123,7 +124,7 @@ const products = [
 
 // Connect to MongoDB and seed data
 mongoose
-  .connect("mongodb://127.0.0.1:27017/jwt_with_products")
+  .connect(process.env.MONGODB_URI)
   .then(async () => {
     console.log("Connected to MongoDB");
 

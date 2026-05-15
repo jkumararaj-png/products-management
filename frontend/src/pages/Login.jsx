@@ -15,7 +15,7 @@ function Login() {
     }
 
     try {
-      const response = await api.get("/user/login", {
+      const response = await api.post("/user/login", {
         email,
         password,
       });
