@@ -28,10 +28,6 @@ const login = async (req, res) => {
       return res.status(401).json({ error: "Invalid email or password" });
     }
 
-    console.log("user found:", user.email);
-    console.log("JWT_SECRET:", process.env.JWT_SECRET);
-    console.log("JWT_EXPIRES_IN:", process.env.JWT_EXPIRES_IN);
-
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(401).json({ error: "Invalid email or password" });
