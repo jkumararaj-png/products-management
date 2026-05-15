@@ -8,7 +8,7 @@ A full-stack application with JWT authentication and product CRUD operations.
 
 cd backend\
 npm i\
-cp .env.example .env
+copy .env.example .env
 
 # Fill in your .env values
 
