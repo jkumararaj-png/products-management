@@ -20,7 +20,7 @@ node server.js
 
 cd frontend\
 npm i\
-cp .env.example .env\
+copy .env.example .env\
 npm run dev
 
 ## Test Credentials
