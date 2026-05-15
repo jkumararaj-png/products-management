@@ -3,12 +3,12 @@ import { useNavigate, useParams } from "react-router";
 import api from "../utils/api";
 
 function EditProduct() {
-  const { id } = useParams(); // ← grabs :id from the URL
+  const { id } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [showConfirm, setShowConfirm] = useState(false); // for delete confirmation
+  const [showConfirm, setShowConfirm] = useState(false);
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -126,11 +126,11 @@ function EditProduct() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className="form">
       <h2>Edit Product</h2>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p style={{ color: "green" }}>{success}</p>}
+      {error && <p className="error">{error}</p>}
+      {success && <p className="success">{success}</p>}
 
       <input
         name="name"
@@ -175,16 +175,18 @@ function EditProduct() {
 
       <button onClick={handleUpdate}>Update Product</button>
       <button onClick={() => navigate("/products")}>Cancel</button>
-      <button onClick={() => setShowConfirm(true)} style={{ color: "red" }}>
+      <button onClick={() => setShowConfirm(true)} className="danger">
         Delete Product
       </button>
 
       {/* confirmation dialog */}
       {showConfirm && (
-        <div>
-          <p>Are you sure you want to delete this product?</p>
+        <div className="confirm">
+          <p style={{ marginBottom: "10px" }}>
+            Are you sure you want to delete this product?
+          </p>
           <button onClick={() => setShowConfirm(false)}>Cancel</button>
-          <button onClick={handleDelete} style={{ color: "red" }}>
+          <button onClick={handleDelete} className="danger">
             Confirm Delete
           </button>
         </div>

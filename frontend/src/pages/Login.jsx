@@ -28,10 +28,10 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className="form">
       <h2>Sign In</h2>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="error">{error}</p>}
 
       <input
         type="email"

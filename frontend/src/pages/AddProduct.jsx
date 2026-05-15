@@ -75,10 +75,10 @@ function AddProduct() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className="form">
       <h2>Add New Product</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p style={{ color: "green" }}>{success}</p>}
+      {error && <p className="error">{error}</p>}
+      {success && <p className="success">{success}</p>}
       <input
         name="name"
         placeholder="Product name"

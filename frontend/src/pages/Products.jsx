@@ -73,17 +73,21 @@ function Products() {
 
   return (
     <div>
-      <div>
+      <div className="nav">
         <h2>Products</h2>
-        <button onClick={handleLogout}>Logout</button>
-        <button onClick={() => navigate("/products/new")}>
-          Add New Product
-        </button>
+        <div>
+          <button onClick={() => navigate("/products/new")}>
+            + New Product
+          </button>
+          <button className="danger" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
       </div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <div>
+      {error && <p className="error">{error}</p>}
+      <div className="grid">
         {products.map((product) => (
-          <div key={product._id}>
+          <div className="card" key={product._id}>
             {product.imageUrl && (
               <img src={product.imageUrl} alt={product.name} width="200" />
             )}
@@ -91,7 +95,9 @@ function Products() {
             <p>{product.description}</p>
             <p>${product.price}</p>
             <p>{product.category}</p>
-            <p>{product.inStock ? "In Stock" : "Out of Stock"}</p>
+            <p className={product.inStock ? "success" : "error"}>
+              {product.inStock ? "In Stock" : "Out of Stock"}
+            </p>
             <button onClick={() => navigate(`/products/edit/${product._id}`)}>
               Edit
             </button>
